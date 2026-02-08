@@ -1,1 +1,289 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أكاديمية معتصم للمونتاج</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #ffffff;
+  color: #111;
+  overflow-x: hidden;
+}
 
+/* ---------- Login Modal ---------- */
+#loginModal {
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#loginModalContent {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+#loginModalContent h2 {
+  margin-bottom: 20px;
+  color: gold;
+}
+
+#loginModalContent input {
+  padding: 10px;
+  width: 80%;
+  font-size: 16px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+#loginModalContent button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: none;
+  background: gold;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* ---------- Header ---------- */
+header {
+  position: relative;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+header img.bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+header video#mainVideo {
+  width: 80%;
+  max-width: 800px;
+  z-index: 2;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+
+.spark {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: gold;
+  box-shadow: 0 0 10px gold, 0 0 15px orange;
+  border-radius: 50%;
+  z-index: 3;
+}
+
+/* ---------- Courses ---------- */
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  background: #f8f8f8;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(255, 215, 0, 0.5);
+}
+
+.card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.card h3 {
+  padding: 10px;
+  margin: 0;
+  color: gold;
+}
+
+.card p {
+  padding: 0 10px 10px 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+/* ---------- Lesson Page ---------- */
+.lesson-container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  display: none; /* مخفي افتراضياً */
+}
+
+.lesson-container video {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.lesson-container h2 {
+  color: gold;
+}
+
+.lesson-container p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.lesson-container button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button.download { background: gold; color: black; }
+button.back { background: #ccc; color: black; }
+
+/* ---------- Footer ---------- */
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #111;
+  color: gold;
+}
+</style>
+</head>
+<body>
+
+<!-- ---------- Login Modal ---------- -->
+<div id="loginModal">
+  <div id="loginModalContent">
+    <h2>سجل دخولك أولاً</h2>
+    <input type="text" placeholder="اسم الحساب" id="username">
+    <br>
+    <button onclick="login()">Download</button>
+  </div>
+</div>
+
+<!-- ---------- Header ---------- -->
+<header>
+  <img src="bg-spark.jpg" alt="خلفية الهيدر" class="bg">
+  <video id="mainVideo" src="intro.mp4" controls></video>
+
+  <!-- شرارات -->
+  <div class="spark" style="top:50px; left:30px;"></div>
+  <div class="spark" style="top:80px; left:120px;"></div>
+  <div class="spark" style="top:30px; left:200px;"></div>
+  <div class="spark" style="top:100px; left:250px;"></div>
+  <div class="spark" style="top:70px; left:300px;"></div>
+  <div class="spark" style="top:40px; left:350px;"></div>
+  <div class="spark" style="top:60px; left:400px;"></div>
+  <div class="spark" style="top:90px; left:450px;"></div>
+</header>
+
+<!-- ---------- Courses ---------- -->
+<div class="container" id="courseList">
+  <div class="card" onclick="openLesson('درس 1', 'lesson1.mp4', 'هذا الدرس مخصص للمبتدئين ويشرح كيفية التعرف على واجهة برنامج KineMaster بسهولة.')">
+    <img src="placeholder.jpg" alt="درس 1">
+    <h3>التعرف على واجهة KineMaster</h3>
+    <p>درس للمبتدئين يشرح كيفية التعرف على واجهة البرنامج بسهولة.</p>
+  </div>
+  <div class="card" onclick="openLesson('درس 2', 'lesson2.mp4', 'درس قص ولصق الفيديوهات بسهولة في KineMaster.')">
+    <img src="placeholder.jpg" alt="درس 2">
+    <h3>قص ولصق الفيديو</h3>
+    <p>تعلم كيفية قص الفيديوهات ولصقها بسهولة في KineMaster.</p>
+  </div>
+  <div class="card" onclick="openLesson('درس 3', 'lesson3.mp4', 'درس إضافة الموسيقى والتأثيرات الصوتية والفلاتر للفيديو.')">
+    <img src="placeholder.jpg" alt="درس 3">
+    <h3>إضافة الصوت والفلاتر</h3>
+    <p>درس يشرح إضافة الموسيقى والتأثيرات الصوتية والفلاتر للفيديو.</p>
+  </div>
+</div>
+
+<!-- ---------- Lesson Container ---------- -->
+<div class="lesson-container" id="lessonContainer">
+  <h2 id="lessonTitle">عنوان الدرس</h2>
+  <video id="lessonVideo" controls></video>
+  <p id="lessonDesc">وصف الدرس</p>
+  <button class="download" id="downloadBtn">Download</button>
+  <button class="back" onclick="backToCourses()">Back</button>
+</div>
+
+<footer>© 2026 أكاديمية معتصم للمونتاج | كل الحقوق محفوظة</footer>
+
+<script>
+// حركة الشرارات
+const sparks = document.querySelectorAll('.spark');
+sparks.forEach(spark => {
+  function move() {
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * 400;
+    const scale = 0.5 + Math.random();
+    spark.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+    spark.style.opacity = Math.random();
+    setTimeout(move, 300 + Math.random() * 400);
+  }
+  move();
+});
+
+// تسجيل الدخول Modal
+function login() {
+  const username = document.getElementById('username').value;
+  if(username.trim() === "") {
+    alert("أدخل اسم الحساب أولاً");
+  } else {
+    document.getElementById('loginModal').style.display = "none";
+    alert("مرحباً " + username + "!");
+  }
+}
+
+// فتح درس داخل نفس الصفحة
+function openLesson(title, videoSrc, desc) {
+  document.getElementById('courseList').style.display = "none";
+  document.getElementById('lessonContainer').style.display = "block";
+  document.getElementById('lessonTitle').innerText = title;
+  document.getElementById('lessonVideo').src = videoSrc;
+  document.getElementById('lessonDesc').innerText = desc;
+  document.getElementById('downloadBtn').onclick = function() {
+    window.location.href = videoSrc;
+  };
+}
+
+// العودة لقائمة الدروس
+function backToCourses() {
+  document.getElementById('lessonContainer').style.display = "none";
+  document.getElementById('courseList').style.display = "grid";
+}
+</script>
+
+</body>
+  </html>
